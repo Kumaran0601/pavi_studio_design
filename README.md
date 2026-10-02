@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Pavi Designer Studio & Training Center (Pure JavaScript)
 
 Production-oriented full-stack web application for **Pavi Designer Studio & Training Center**, an Aari embroidery studio, bridal blouse designer, customized works studio, training center, and Aari materials catalogue in Padi, Chennai.
@@ -79,3 +80,6 @@ And start in production mode:
 ```bash
 pnpm start
 ```
+=======
+# pavi_studio_design
+>>>>>>> d52854b4112b2692a320bab6e788549e1c6cead1
