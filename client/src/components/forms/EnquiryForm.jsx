@@ -9,12 +9,44 @@ export function EnquiryForm() {
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
-  const update = (key, value) => setValues(curr => ({ ...curr, [key]: value }));
+  const update = (key, value) => {
+    setValues(curr => ({ ...curr, [key]: value }));
+    if (fieldErrors[key]) {
+      setFieldErrors(curr => {
+        const next = { ...curr };
+        delete next[key];
+        return next;
+      });
+    }
+  };
 
   const submit = async event => {
     event.preventDefault();
-    setStatus('loading');
     setError('');
+
+    // Instant client-side validation for required fields
+    const errors = {};
+    if (!values.name || !values.name.trim()) errors.name = 'Please enter your name.';
+    if (!values.phone || !values.phone.trim()) {
+      errors.phone = 'Please enter your phone number.';
+    } else {
+      const digits = values.phone.replace(/[^0-9]/g, '');
+      if (digits.length < 10) errors.phone = 'Please enter a valid 10-digit phone number.';
+    }
+    if (!values.service) errors.service = 'Please choose a service.';
+    if (!values.message || !values.message.trim()) errors.message = 'Please enter your message or requirements.';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError('Please fill in all required fields highlighted below.');
+      toast.error('Please complete the highlighted required fields.');
+      const firstKey = Object.keys(errors)[0];
+      const el = document.getElementById(`enquiry-${firstKey}`);
+      if (el) el.focus();
+      return;
+    }
+
+    setStatus('loading');
     setFieldErrors({});
 
     try {

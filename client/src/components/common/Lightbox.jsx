@@ -6,14 +6,22 @@ export function Lightbox({ item, items, onClose, onChange }) {
   const move = dir => onChange(items[(index + dir + items.length) % items.length]);
 
   useEffect(() => {
+    document.body.classList.add('lightbox-open');
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     const onKey = event => {
       if (event.key === 'Escape') onClose();
       if (event.key === 'ArrowRight') move(1);
       if (event.key === 'ArrowLeft') move(-1);
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  });
+    return () => {
+      document.body.classList.remove('lightbox-open');
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [index, items]);
 
   return (
     <div

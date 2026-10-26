@@ -21,9 +21,9 @@ const { TextArea } = Input;
 
 export function CourseManager({ course, onRefresh }) {
   const [form, setForm] = useState({
-    title: course?.title || '1 Month Aari Embroidery Course',
+    title: (course?.title || '1 Month Aari Embroidery Course').replace(/^I(\s+|-)/i, '1$1'),
     subtitle: course?.subtitle || 'Learn Aari Embroidery with Practical Guidance and Certificate',
-    durationText: course?.durationText || '1 Month',
+    durationText: (course?.durationText || '1 Month').replace(/^I(\s+|-)/i, '1$1'),
     certificateText: course?.certificateText || 'Certificate Provided',
     ctaLabel: course?.ctaLabel || 'Enquire About the Next Batch',
     description: course?.description || '',
@@ -41,9 +41,9 @@ export function CourseManager({ course, onRefresh }) {
   useEffect(() => {
     if (course) {
       setForm({
-        title: course.title || '1 Month Aari Embroidery Course',
+        title: (course.title || '1 Month Aari Embroidery Course').replace(/^I(\s+|-)/i, '1$1'),
         subtitle: course.subtitle || 'Learn Aari Embroidery with Practical Guidance and Certificate',
-        durationText: course.durationText || '1 Month',
+        durationText: (course.durationText || '1 Month').replace(/^I(\s+|-)/i, '1$1'),
         certificateText: course.certificateText || 'Certificate Provided',
         ctaLabel: course.ctaLabel || 'Enquire About the Next Batch',
         description: course.description || '',

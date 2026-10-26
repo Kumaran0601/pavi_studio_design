@@ -28,6 +28,7 @@ import { ServicesManager } from './ServicesManager';
 import { MaterialsManager } from './MaterialsManager';
 import { CourseManager } from './CourseManager';
 import { SettingsManager } from './SettingsManager';
+import { notifyContentUpdated } from '../utils/contentSync';
 
 export function AdminWorkspace({ user, logout }) {
   const [section, setSection] = useState('overview');
@@ -38,7 +39,10 @@ export function AdminWorkspace({ user, logout }) {
 
   const fetchDashboard = async () => {
     try {
-      const res = await fetch(`${API}/admin/dashboard`, { credentials: 'include' });
+      const res = await fetch(`${API}/admin/dashboard?_t=${Date.now()}`, {
+        credentials: 'include',
+        cache: 'no-store',
+      });
       const json = await res.json();
       if (json.data) setData(json.data);
     } catch (err) {
@@ -48,7 +52,10 @@ export function AdminWorkspace({ user, logout }) {
 
   const fetchEnquiries = async () => {
     try {
-      const res = await fetch(`${API}/admin/enquiries`, { credentials: 'include' });
+      const res = await fetch(`${API}/admin/enquiries?_t=${Date.now()}`, {
+        credentials: 'include',
+        cache: 'no-store',
+      });
       const json = await res.json();
       if (Array.isArray(json.data)) setEnquiries(json.data);
     } catch (err) {
@@ -60,6 +67,7 @@ export function AdminWorkspace({ user, logout }) {
     setLoading(true);
     await Promise.all([fetchDashboard(), fetchEnquiries()]);
     setLoading(false);
+    notifyContentUpdated();
   };
 
   useEffect(() => {

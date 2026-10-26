@@ -7,6 +7,7 @@ import { PageIntro } from '../components/common/PageIntro';
 import { PageLoading } from '../components/common/PageLoading';
 import { SectionHeading } from '../components/common/SectionHeading';
 import { ContactBand } from '../components/layout/ContactBand';
+import { renderWithCleanDigits } from '../components/common/FormattedText';
 
 export function ClassesPage({ state }) {
   usePageMeta(
@@ -17,12 +18,14 @@ export function ClassesPage({ state }) {
   const data = state.data;
   if (!data) return <PageLoading />;
   const course = data.course || {};
+  const cleanTitle = (course.title || '1 Month Aari Embroidery Course').replace(/^I(\s+|-)/i, '1$1');
+  const cleanDuration = (course.durationText || '1 Month').replace(/^I(\s+|-)/i, '1$1');
 
   return (
     <>
       <PageIntro
         eyebrow="Training center"
-        title={course.title || '1 Month Aari Embroidery Course'}
+        title={cleanTitle}
         description={course.subtitle || 'Learn Aari embroidery with practical training and certificate.'}
         image={approvedTrainingImage}
         imageAlt="Pavi Designer Studio training and community event"
@@ -31,12 +34,12 @@ export function ClassesPage({ state }) {
         <div className="container course-grid">
           <div className="course-card-feature">
             <span className="eyebrow">The course</span>
-            <h2>{course.title}</h2>
+            <h2>{renderWithCleanDigits(cleanTitle)}</h2>
             <p>{course.description}</p>
             <div className="course-facts">
               <div>
                 <span>Course duration</span>
-                <strong>{course.durationText}</strong>
+                <strong>{renderWithCleanDigits(cleanDuration)}</strong>
               </div>
               <div>
                 <span>Certificate</span>

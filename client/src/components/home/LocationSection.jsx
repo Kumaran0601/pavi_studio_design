@@ -3,6 +3,11 @@ import { ExternalLink, ArrowRight, MapPin } from 'lucide-react';
 import { SectionHeading } from '../common/SectionHeading';
 
 export function LocationSection({ settings }) {
+  const exactMapsUrl =
+    settings?.googleMapsUrl && !settings.googleMapsUrl.includes('Pavi+Designer+Studio+Training+Center')
+      ? settings.googleMapsUrl
+      : 'https://www.google.com/maps/search/?api=1&query=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai%2C+Tamil+Nadu+600050';
+
   return (
     <section className="section location-section">
       <div className="container location-card">
@@ -22,7 +27,7 @@ export function LocationSection({ settings }) {
           </div>
           <a
             className="text-link"
-            href={settings?.googleMapsUrl}
+            href={exactMapsUrl}
             target="_blank"
             rel="noreferrer"
           >
@@ -38,12 +43,12 @@ export function LocationSection({ settings }) {
               style={{ border: 0, borderRadius: '4px' }}
               loading="lazy"
               allowFullScreen
-              src="https://maps.google.com/maps?q=Padi%2C%20Chennai%2C%20Tamil%20Nadu%20600050&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai+600050&t=&z=16&ie=UTF8&iwloc=&output=embed"
             />
           </div>
           <div className="map-caption">
-            <strong>Padi, Chennai - 600 050</strong>
-            <a href={settings?.googleMapsUrl} target="_blank" rel="noreferrer">
+            <strong>20/1, Padavattamman Koil St, Padi, Chennai - 600 050</strong>
+            <a href={exactMapsUrl} target="_blank" rel="noreferrer">
               Open directions in Google Maps <ArrowRight size={15} />
             </a>
           </div>

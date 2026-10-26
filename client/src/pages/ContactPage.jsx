@@ -44,7 +44,16 @@ export function ContactPage({ state }) {
               <WhatsAppIcon size={20} color="#25D366" />
               <div>
                 <span>WhatsApp</span>
-                <WhatsAppButton settings={settings} label="Start a conversation" />
+                <a
+                  href={`https://wa.me/${(settings.whatsappNumber || '917358461060').replace(/\D/g, '')}?text=${encodeURIComponent(
+                    'Hi Pavi Designer Studio, I would like to enquire about Aari embroidery work.'
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="contact-whatsapp-link"
+                >
+                  Start a conversation
+                </a>
               </div>
             </div>
 
@@ -66,7 +75,15 @@ export function ContactPage({ state }) {
                     <span key={line}>{line}</span>
                   ))}
                 </p>
-                <a href={settings.googleMapsUrl} target="_blank" rel="noreferrer">
+                <a
+                  href={
+                    settings.googleMapsUrl && !settings.googleMapsUrl.includes('Pavi+Designer+Studio+Training+Center')
+                      ? settings.googleMapsUrl
+                      : 'https://www.google.com/maps/search/?api=1&query=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai%2C+Tamil+Nadu+600050'
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Get directions <ExternalLink size={14} />
                 </a>
               </div>

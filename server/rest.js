@@ -524,6 +524,9 @@ async function getPublicSettings() {
     for (const row of rows) {
       settings[row.settingKey] = parseJson(row.valueJson, row.valueJson);
     }
+    if (!settings.googleMapsUrl || settings.googleMapsUrl.includes('Pavi+Designer+Studio+Training+Center')) {
+      settings.googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai%2C+Tamil+Nadu+600050';
+    }
     return settings;
   }, memoryStore.settings);
 }
@@ -576,17 +579,26 @@ async function getAllMaterialsAdmin() {
 }
 
 async function getCourse() {
+  const normalize = (c) => {
+    if (!c) return c;
+    return {
+      ...c,
+      title: (c.title || '1 Month Aari Embroidery Course').replace(/^I(\s+|-)/i, '1$1'),
+      durationText: (c.durationText || '1 Month').replace(/^I(\s+|-)/i, '1$1'),
+    };
+  };
+
   return withDb(async db => {
     const [rows] = await db.query('SELECT * FROM courses WHERE isActive = 1 LIMIT 1');
-    if (!rows.length) return memoryStore.course;
+    if (!rows.length) return normalize(memoryStore.course);
     const row = rows[0];
-    return {
+    return normalize({
       ...row,
       learningPoints: parseJson(row.learningPoints, []),
       audiencePoints: parseJson(row.audiencePoints, []),
       faqItems: parseJson(row.faqItems, []),
-    };
-  }, memoryStore.course);
+    });
+  }, normalize(memoryStore.course));
 }
 
 async function getEnquiries() {

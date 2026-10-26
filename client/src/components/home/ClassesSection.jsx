@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { SectionHeading } from '../common/SectionHeading';
+import { renderWithCleanDigits } from '../common/FormattedText';
 
 export function ClassesSection({ course, settings, image }) {
   return (
@@ -16,7 +17,7 @@ export function ClassesSection({ course, settings, image }) {
           <div className="course-facts">
             <div>
               <span>Duration</span>
-              <strong>{course?.durationText || '1 Month'}</strong>
+              <strong>{renderWithCleanDigits((course?.durationText || '1 Month').replace(/^I(\s+|-)/i, '1$1'))}</strong>
             </div>
             <div>
               <span>Certificate</span>

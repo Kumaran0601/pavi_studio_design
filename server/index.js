@@ -50,6 +50,14 @@ async function startServer() {
     next();
   });
 
+  // Ensure fresh real-time data for all API requests
+  app.use('/api', (_req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+  });
+
   // Serve uploaded images statically
   const uploadsPath = path.join(__dirname, 'uploads');
   if (!fs.existsSync(uploadsPath)) {

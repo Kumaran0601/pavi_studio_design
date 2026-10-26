@@ -8,16 +8,32 @@ export function SiteHeader({ settings }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
-  useEffect(() => setOpen(false), [location.pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   const navLinks = [
-    ['/', 'Home'],
-    ['/about', 'About'],
-    ['/services', 'Services'],
-    ['/classes', 'Aari Classes'],
-    ['/gallery', 'Gallery'],
-    ['/materials', 'Materials'],
-    ['/contact', 'Contact'],
+    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
+    { to: '/services', label: 'Services' },
+    { to: '/classes', label: 'Course' },
+    { to: '/gallery', label: 'Gallery' },
+    { to: '/materials', label: 'Materials' },
+    { to: '/contact', label: 'Contact' },
   ];
 
   return (
@@ -32,9 +48,9 @@ export function SiteHeader({ settings }) {
             </span>
           </Link>
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {navLinks.slice(0, 6).map(([to, label]) => (
-              <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'active' : '')}>
-                {label}
+            {navLinks.map(item => (
+              <NavLink key={item.to} to={item.to} className={({ isActive }) => (isActive ? 'active' : '')}>
+                {item.label}
               </NavLink>
             ))}
           </nav>
@@ -54,19 +70,19 @@ export function SiteHeader({ settings }) {
         </div>
       </header>
       {open && (
-        <div className="mobile-menu">
-          <div className="container">
-            <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-slate-800">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Appearance</span>
-              <ThemeToggle size="small" />
+        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
+          <div className="container mobile-menu-inner">
+            <nav className="mobile-nav-links">
+              {navLinks.map(item => (
+                <Link key={item.to} to={item.to} onClick={() => setOpen(false)}>
+                  <span>{item.label}</span>
+                  <ArrowRight size={16} />
+                </Link>
+              ))}
+            </nav>
+            <div className="mobile-menu-whatsapp">
+              <WhatsAppButton settings={settings} label="Start a WhatsApp conversation" />
             </div>
-            {navLinks.map(([to, label]) => (
-              <Link key={to} to={to}>
-                {label}
-                <ArrowRight size={16} />
-              </Link>
-            ))}
-            <WhatsAppButton settings={settings} label="Start a WhatsApp conversation" />
           </div>
         </div>
       )}

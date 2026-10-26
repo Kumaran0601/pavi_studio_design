@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, Instagram, MapPin, Phone } from 'lucide-react';
 
 export function SiteFooter({ settings }) {
+  const exactMapsUrl =
+    settings?.googleMapsUrl && !settings.googleMapsUrl.includes('Pavi+Designer+Studio+Training+Center')
+      ? settings.googleMapsUrl
+      : 'https://www.google.com/maps/search/?api=1&query=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai%2C+Tamil+Nadu+600050';
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -29,7 +34,7 @@ export function SiteFooter({ settings }) {
         <div>
           <h3>Explore</h3>
           <Link to="/services">Services</Link>
-          <Link to="/classes">Aari Classes</Link>
+          <Link to="/classes">Course</Link>
           <Link to="/gallery">Gallery</Link>
           <Link to="/materials">Aari Materials</Link>
           <Link to="/admin/login">Studio Admin</Link>
@@ -43,8 +48,17 @@ export function SiteFooter({ settings }) {
           ))}
           <div className="address-line">
             <MapPin size={15} />{' '}
-            <span>{settings?.addressLines?.slice(0, 3).join(', ') || 'Padi, Chennai'}</span>
+            <span>{settings?.addressLines?.join(', ') || '20/1, 1st Floor, Padavattamman Koil Street, Padi, Chennai - 600 050'}</span>
           </div>
+          <a
+            className="footer-map-link"
+            href={exactMapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Get exact map location on Google Maps"
+          >
+            Get map location <ArrowRight size={13} className="arrow-icon" />
+          </a>
         </div>
       </div>
       <div className="container footer-bottom">

@@ -20,7 +20,7 @@ export function ContactBand({ settings }) {
             <Phone size={17} /> Call now
           </a>
           <WhatsAppButton settings={settings} label="WhatsApp us" />
-          <Link className="button button-gold" to="/contact">
+          <Link className="button button-gold send-enquiry-btn" to="/contact">
             Send enquiry <ArrowRight size={17} />
           </Link>
         </div>

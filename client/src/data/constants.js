@@ -26,6 +26,6 @@ export const defaultSettingsFallback = {
   whatsappNumber: '917358461060',
   instagramHandle: '@pavi_designer_studio',
   instagramUrl: 'https://www.instagram.com/pavi_designer_studio/',
-  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Pavi+Designer+Studio+Training+Center+Padi+Chennai',
+  googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=20%2F1%2C+Padavattamman+Koil+Street%2C+Padi%2C+Chennai%2C+Tamil+Nadu+600050',
   heroImageUrl: defaultHeroImage,
 };

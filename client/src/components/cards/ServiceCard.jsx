@@ -13,7 +13,6 @@ export function ServiceCard({ service }) {
         </span>
       </Link>
       <div className="card-content">
-        <span className="card-kicker">{String(service.sortOrder || 1).padStart(2, '0')}</span>
         <h3>{service.title}</h3>
         <p>{service.shortDescription}</p>
         <Link className="text-link" to={`/services/${service.slug}`}>

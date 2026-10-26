@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { useApi } from './hooks/useApi';
 import { ThemeProvider } from './context/ThemeContext';
@@ -24,6 +24,11 @@ import { AdminPage } from './admin/AdminPage';
 
 function AppRoutes() {
   const home = useApi('/public/home');
+  const location = useLocation();
+
+  useEffect(() => {
+    home.refetch(true);
+  }, [location.pathname]);
 
   return (
     <Routes>
